@@ -1,0 +1,26 @@
+{
+  "name": "reactgraphsocket",
+  "version": "1.0.0",
+  "description": "Create your files in your public files. Name your files as you wish",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/client": "^3.3.14",
+    "@babel/core": "^7.13.14",
+    "@babel/preset-react": "^7.13.13",
+    "apollo-server-express": "^2.22.2",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.2.0",
+    "express": "^4.16.3",
+    "express-session": "^1.17.1",
+    "graphql": "^15.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.30.0"
+  }
+}

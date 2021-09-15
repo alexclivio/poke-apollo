@@ -3,3 +3,5 @@ package-lock.json
 README
 src/Kanban.js
 node_modules
+app.js
+views

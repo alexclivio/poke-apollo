@@ -3,3 +3,4 @@ package-lock.json
 README
 src/Kanban.js
 node_modules
+public/dist

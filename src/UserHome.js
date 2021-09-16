@@ -1,7 +1,6 @@
 import React from 'react'
-import sendQuery from './sendQuery'
 import {Star} from './Star'
-import { useMutation, gql } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 
 const STAR_RATING = gql`
   mutation setStar($titleName: String!, $starValue: Int!) {
@@ -29,11 +28,18 @@ const UNENROLLED_LESSON = gql`
     }
   }
 `
+const GET_LESSONS = gql`
+  query Lessons {
+    lessons {
+      title
+      value
+    }
+  }
+`
 
 const UserHome = (props) => {
-  const [lessons, setLessons] = React.useState([])
+  const { loading, error, data: { lessons } = {} } = useQuery(GET_LESSONS);
   const [enrolled, setEnrolled] = React.useState(props.login['lessons'] || [])
-  const [loadPage, setLoadPage] = React.useState(true)
   const [mutateStarRating] = useMutation(STAR_RATING)
   const [enrolledMutation, {data: enrolledData}] = useMutation(ENROLLED_LESSON, {
     onCompleted(enrolledData) {
@@ -46,19 +52,14 @@ const UserHome = (props) => {
     }
   })
 
-
-  React.useEffect(() => {
-    sendQuery(`{lessons{title, value}}`).then(data => {
-      setLessons(data.lessons)
-      setLoadPage(false)
-    }); 
-  }, [])
-
   const enrolledMap = enrolled.reduce((acc, lesson) => {
     acc[lesson.title] = true
     return acc
   }, {})
 
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
   const unenrolled = lessons.filter((lesson) => {
     if(enrolledMap[lesson.title]) {
       return false
@@ -107,10 +108,6 @@ const UserHome = (props) => {
     )
   })
 
-  if(loadPage) {
-    return <h1>Loading...</h1>
-  }
-  
   return (
     <div>
       <h1>{props.login.name}</h1>
